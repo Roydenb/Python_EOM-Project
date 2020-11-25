@@ -40,6 +40,7 @@ def log_in():
          first_num= Entry(new)
          first_num.pack()
 
+
          second_num= Entry(new)
          second_num.pack()
 
@@ -55,23 +56,60 @@ def log_in():
          last_num= Entry(new)
          last_num.pack()
 
-def lotto_numbers():
-    last_window=Tk()
-    last_window.title("This is the lotto numbers")
+         random_numbers= Button(new,text="Lotto numbers",command=check_winning_count)
+         random_numbers.pack()
 
+         final_button= Button(new,text="Generate",command=check_winnings)
+         final_button.pack()
+
+         my_entry_list= int(first_num.get()),int(second_num.get()),int(third_num.get()),int(fourth_num.get()),int(fifth_num.get()),int(last_num.get())
+         return my_entry_list
+
+
+def check_winning_count():
     random_list = random.sample(range(1, 49), 6) # winning lotto numbers
-    lotto_nums=Label(random_list)
-    lotto_nums.pack()
 
+    lbl1= Label()
+    lbl1.pack()
 
-random_numbers= Button(text="Lotto numbers")
-random_numbers.pack()
+    lbl2= Label()
+    lbl2.pack()
+
+    lbl3= Label()
+    lbl3.pack()
+
+    lbl4= Label()
+    lbl4.pack()
+
+    lbl5= Label()
+    lbl5.pack()
+
+    lbl6= Label()
+    lbl6.pack()
+
+    count = 0
+    for num in random_list :
+        if num in random_list:
+            count = count + 1
+            return count
+
+def check_winnings():
+    count = check_winning_count()
+    if count < 2:
+       messagebox.showinfo("Sorry, try again next time.")
+    if count == 2:
+       messagebox.showinfo("Well done you have 2 right\nYou win\nR20.00")
+    if count == 3:
+       messagebox.showinfo("Well done you have 3 right\nYou win\n R100.50")
+    if count == 4:
+       messagebox.showinfo("Well done you have 4 right\nYou win\n R2,384.00")
+    if count == 5:
+       messagebox.showinfo("Well done you have 5 right\nYou win\n 8,584.00")
+       breakpoint()
+    if count == 6:
+       messagebox.showinfo("You win\n R10, 000 000.00")
 
 login_btn= Button(text="Login",command=log_in)
 login_btn.pack()
-
-
-
-
 
 mainloop()
