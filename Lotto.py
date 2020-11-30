@@ -3,7 +3,7 @@ from tkinter import messagebox
 from datetime import *
 from random import sample
 
-
+# Fuction that will have the game started
 def game_time():
     Loggedin = Tk()
     Loggedin.title("Lotto")
@@ -15,17 +15,18 @@ def game_time():
 
     important_notice = Label(Loggedin, text="PLEASE NOTE:")
     important_notice.configure(font=("bold"), bg="yellow")
-    important_notice.place(x=95, y=30)
+    important_notice.place(x=190, y=30)
 
-    notice_continue = Label(Loggedin, text="Your numbers can't be lower than 1\n and \n can't be higher than 49 ", bg="yellow", font="bold")
+    notice_continue = Label(Loggedin, text="1.You can only choose between \n1 and 49 \n2.Duplicated numbers is not allowed.", bg="yellow", font="bold")
     notice_continue.place(x=100, y=50)
 
-    # Label to inform user what to do
+    # Label to inform user to insert there numbers
     lbl1 = Label(Loggedin, text="Insert your numbers.")
     lbl1.configure(font=("FreeMono", 15, "bold"),bg="yellow")
     lbl1.place(x=145, y=120)
 
-    # Entry's for user to insert there numbers
+
+    # Entries for user to insert there numbers
     e1 = Entry(Loggedin)
     e1.configure(bd=2, width=4)
     e1.place(x=145, y=150)
@@ -45,22 +46,28 @@ def game_time():
     e6.configure(bd=2, width=4)
     e6.place(x=320, y=150)
 
+    # Error handling,
+    # when user don't insert any numbers it don't allow them to go any further
     def lotto_list():
-        number_1 = int(e1.get())
-        number_2 = int(e2.get())
-        number_3 = int(e3.get())
-        number_4 = int(e4.get())
-        number_5 = int(e5.get())
-        number_6 = int(e6.get())
-        list_1 = number_1, number_2, number_3, number_4, number_5, number_6
-        return list_1
+        try:
+            number_1 = int(e1.get())
+            number_2 = int(e2.get())
+            number_3 = int(e3.get())
+            number_4 = int(e4.get())
+            number_5 = int(e5.get())
+            number_6 = int(e6.get())
+            list_1 = number_1, number_2, number_3, number_4, number_5, number_6
+            return list_1
+        except ValueError:
+               messagebox.showerror("Please note","You need to enter your numbers to play\nNo cheating is allowed \nStart over!!!")
+               Loggedin.withdraw()
 
     # heading for random numbers/lotto numbers
-    head = Label(Loggedin, text="& the numbers are...")
+    head = Label(Loggedin, text="& the LOTTO numbers is...")
     head.configure(font=("FreeMono", 15, "bold"),bg="yellow")
     head.place(x=145, y=180)
 
-    # Display lables
+    # Creating and placing the labels for the random numbers/lotto numbers
     lotto_number1_lbl = Label(Loggedin, width=4, bg="yellow")
     lotto_number1_lbl.place(x=145, y=210)
     lotto_number2_lbl = Label(Loggedin, width=4, bg="yellow")
@@ -74,6 +81,7 @@ def game_time():
     lotto_number6_lbl = Label(Loggedin, width=4, bg="yellow")
     lotto_number6_lbl.place(x=320, y=210)
 
+        # Configuring the labels for the random numbers/lotto numbers
     def lotto_numbers_is():
         lotto = sample(range(1, 49), 7)
         lotto.sort()
@@ -86,7 +94,8 @@ def game_time():
         lotto_number6_lbl.configure(text=lotto[5], bg="purple")
         play_lotto.configure(state=DISABLED)
 
-
+        # Comparing the numbers with one another
+        # Informing if a user win something or wins nothing at all
         count = 0
         for number in lotto_list():
             if number in lotto:
@@ -142,7 +151,7 @@ def age():
             birth_month_ent.get() + " " + birth_day_ent.get() +" " + "Logged on at: " + str(now) + "\n")
     f.close()
 
-    #DOB inputs
+    #Getting the users DOB input
     year_of_bday = int(birth_year_ent.get())
     month_of_bday = int(birth_month_ent.get())
     day_of_bday = int(birth_day_ent.get())
@@ -153,19 +162,19 @@ def age():
     #And it avoid underage parties to play
     age = today.year - b_date.year
     if age > 18:
-        messagebox.showinfo("Welcome", "You have successfully \n""Logged in \n""!!!Best of luck!!!")
-        Login.destroy()
-        game_time()
-
+       messagebox.showinfo("Welcome", "You have successfully \n""Logged in \n""!!!Best of luck!!!")
+       Login.destroy()
+       game_time()
     else:
-        messagebox.showerror("Please Note", "You under age\n" "You not allowed to play.")
-        return age
+        messagebox.showerror("Please NOTE","No one under 18 \nis allowed to \npartake in playing \nLOTTO")
 
+# Exits the program
 def quit():
     Login.destroy()
 
 
 # First window
+# Where the user need to Login
 Login = Tk()
 Login.title("Welcome to our Lotto App")
 
@@ -190,12 +199,14 @@ surname_ent = Entry(Login)
 surname_ent.configure(width=40)
 surname_ent.place(x=150, y=90)
 
-#DOB guide/ Layout
+#DOB guide/ Layout the DOB need to be entered
 dob_guide_lbl = Label(Login, text="yyyy/mm/dd: ")
 dob_guide_lbl.configure(font=("Ariel",13, "bold"), bg="white")
 dob_guide_lbl.place(x=30, y=150)
 
 #DOB label
+# This is like a heading to indicate here the DOB
+# information is needed
 dob_lbl = Label(Login, text="Date Of Birth")
 dob_lbl.configure(font=("FreeMono", 13, "bold"), bg="white")
 dob_lbl.place(x=30, y=120)
@@ -217,7 +228,7 @@ login_btn = Button(Login, text="LOGIN", command=age)
 login_btn.configure(bd=2)
 login_btn.place(x=190, y=200)
 
-#Quit Button
+#Quit Button/ Exit Button.
 quit_btn = Button(Login, text="EXIT")
 quit_btn.configure(bd=2, command=quit)
 quit_btn.place(x=260, y=200)
